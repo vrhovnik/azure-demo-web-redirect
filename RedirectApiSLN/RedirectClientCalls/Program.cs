@@ -27,6 +27,20 @@ namespace RedirectClientCalls
             await CallHttpApi("Calling [bold red]api with HTML encoded parameter[/] to check, if it works", baseUrl,
                 "demo/withparam/john%2Fd");
 
+            var productionBaseUrl = Environment.GetEnvironmentVariable("ProdURL");
+
+            if (!string.IsNullOrEmpty(productionBaseUrl))
+            {
+                AnsiConsole.Render(new Markup($"Prodution URL is set to [bold blue]{productionBaseUrl}[/]"));
+                AnsiConsole.WriteLine();
+
+                await CallHttpApi("Calling production [bold red]api[/] health to see, if API is up and running",
+                    productionBaseUrl, "live/amialive"); 
+                
+                await CallHttpApi("Calling [bold red]api with HTML encoded parameter[/] to check, if it works", baseUrl,
+                    "live/withparam/john%2Fd");
+            }
+
             OutputRule("Finished with calls");
         }
 
