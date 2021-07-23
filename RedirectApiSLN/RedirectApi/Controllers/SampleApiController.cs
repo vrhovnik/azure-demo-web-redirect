@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using RedirectApi.Models;
+using RedirectApi.Helpers;
 
 namespace RedirectApi.Controllers
 {
@@ -14,10 +12,7 @@ namespace RedirectApi.Controllers
     {
         private readonly ILogger<SampleApiController> logger;
 
-        public SampleApiController(ILogger<SampleApiController> logger)
-        {
-            this.logger = logger;
-        }
+        public SampleApiController(ILogger<SampleApiController> logger) => this.logger = logger;
 
         [Route("amialive")]
         public IActionResult HealthCheck()
@@ -26,17 +21,22 @@ namespace RedirectApi.Controllers
             return Ok($"I'm alive at {DateTime.Now}");
         }
 
+        [Route("withparam/{param}")]
+        [Produces("application/json")]
+        public IActionResult ReturnWithParameter(string param)
+        {
+            var list = StaticDataGenerator.SearchingTheList(param);
+            logger.LogInformation($"Doing serialization on the filtered list with {list.Count} items");
+            var json = JsonSerializer.Serialize(list);
+            logger.LogInformation("serialization done and returning the list with demo data");
+            return Ok(json);
+        }
+        
         [Route("givemejson")]
         [Produces("application/json")]
         public IActionResult ReturnJsonExampleFile()
         {
-            logger.LogInformation("filling the list");
-            var list = new List<Person>
-            {
-                new() {FullName = "John Doe"},
-                new() {FullName = "John Smith", Age = 33},
-                new() {FullName = "Maria Smith", Age = 30}
-            };
+            var list = StaticDataGenerator.GetPersonList();
             logger.LogInformation($"Doing serialization on the list with {list.Count} items");
             var json = JsonSerializer.Serialize(list);
             logger.LogInformation("serialization done and returning the list with demo data");
