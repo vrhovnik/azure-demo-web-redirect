@@ -1,0 +1,20 @@
+name: Contaner image build
+on:
+  push:
+    branches: [ main ] 
+  workflow_dispatch:
+jobs:
+  image-build:
+   runs-on: ubuntu-latest      
+   steps:     
+    - uses: actions/checkout@v2         
+    - run: docker build -t "${{ secrets.AZURE_CEECSA_REGISTRY_SERVER }}/route-demo/api:$GITHUB_RUN_NUMBER" .       
+    
+    - name: Login to Azure Container registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.AZURE_CEECSA_REGISTRY_SERVER }}
+        username: ${{ secrets.AZURE_CEECSA_REGISTRY_USERNAME }}
+        password: ${{ secrets.AZURE_CEECSA_REGISTRY_KEY }}
+    
+    - run: docker push "${{ secrets.AZURE_CEECSA_REGISTRY_SERVER }}/route-demo/api:$GITHUB_RUN_NUMBER"
