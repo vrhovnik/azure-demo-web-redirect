@@ -23,9 +23,12 @@ namespace RedirectClientCalls
 
             await CallHttpApi("Calling [bold red]api with parameter[/] to check, if it works", baseUrl,
                 "demo/withparam/john");
-            //call parameter and add ASCI characters in
-            await CallHttpApi("Calling [bold red]api with HTML encoded parameter[/] to check, if it works", baseUrl,
-                "demo/withparam/john%2Fd");
+            //call parameter and add space characters in
+            await CallHttpApi("Calling [bold red]api with space parameter[/] to check, if it works", baseUrl,
+                "demo/withparam/john d");
+            //call parameter with /
+            await CallHttpApi("Calling [bold red]api with space parameter[/] to check, if it works", baseUrl,
+                "demo/withparam//");
 
             var productionBaseUrl = Environment.GetEnvironmentVariable("ProdURL");
 
@@ -34,11 +37,19 @@ namespace RedirectClientCalls
                 AnsiConsole.Render(new Markup($"Prodution URL is set to [bold blue]{productionBaseUrl}[/]"));
                 AnsiConsole.WriteLine();
 
-                await CallHttpApi("Calling production [bold red]api[/] health to see, if API is up and running",
-                    productionBaseUrl, "live/amialive"); 
+                await CallHttpApi("Calling production [bold red]system[/] health to see, if API is up and running",
+                    productionBaseUrl, "health");
                 
-                await CallHttpApi("Calling [bold red]api with HTML encoded parameter[/] to check, if it works", baseUrl,
-                    "live/withparam/john%2Fd");
+                await CallHttpApi("Calling production [bold red]api[/] health to see, if API is up and running",
+                    productionBaseUrl, "live/amialive");
+
+                //doing with parameter space call
+                await CallHttpApi("Calling [bold red]api with space parameter[/] to check, if it works",
+                    productionBaseUrl, "live/withparam/john d");
+                
+                //call parameter with /
+                await CallHttpApi("Calling [bold red]api with space parameter[/] to check, if it works", baseUrl,
+                    "demo/withparam//");
             }
 
             OutputRule("Finished with calls");

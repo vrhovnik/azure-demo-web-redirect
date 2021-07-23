@@ -10,6 +10,7 @@ namespace RedirectApi.Helpers
         {
             new() {FullName = "John Doe"},
             new() {FullName = "John Smith", Age = 33},
+            new() {FullName = "Jane Do /", Age = 33},
             new() {FullName = "Maria Smith", Age = 30}
         };
         
