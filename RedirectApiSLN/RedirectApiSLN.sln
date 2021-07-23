@@ -4,6 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedirectApi", "RedirectApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedirectClientCalls", "RedirectClientCalls\RedirectClientCalls.csproj", "{9211917E-AB12-4B72-8805-3E1123387DAD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{3EC95D35-B6FE-429A-B795-1672F8A9B1C4}"
+ProjectSection(SolutionItems) = preProject
+	..\Dockerfile = ..\Dockerfile
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
