@@ -23,7 +23,7 @@ namespace RedirectApi.Helpers
             var list = GetPersonList();
             var personList = JsonConvert.SerializeObject(list);
             var personListBytes = Encoding.UTF8.GetBytes(personList);
-            using var memoryStream = new MemoryStream();
+            var memoryStream = new MemoryStream();
             memoryStream.Write(personListBytes,0,personListBytes.Length);
             memoryStream.Position = 0;
             return memoryStream;
