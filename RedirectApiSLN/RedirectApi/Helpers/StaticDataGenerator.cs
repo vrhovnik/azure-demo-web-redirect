@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using Newtonsoft.Json;
 using RedirectApi.Models;
 
 namespace RedirectApi.Helpers
@@ -15,10 +18,21 @@ namespace RedirectApi.Helpers
         };
         
         public static List<Person> GetPersonList() => list;
+        public static MemoryStream GetPersonListAsMemoryStream()
+        {
+            var list = GetPersonList();
+            var personList = JsonConvert.SerializeObject(list);
+            var personListBytes = Encoding.UTF8.GetBytes(personList);
+            using var memoryStream = new MemoryStream();
+            memoryStream.Write(personListBytes,0,personListBytes.Length);
+            memoryStream.Position = 0;
+            return memoryStream;
+        }
+
         public static List<Person> SearchingTheList(string parameter)
         {
-            if (string.IsNullOrEmpty(parameter)) return list;
-            return list.Where(d => d.FullName.ToLower().Contains(parameter)).ToList();
+            return string.IsNullOrEmpty(parameter) ? list : 
+                list.Where(d => d.FullName.ToLower().Contains(parameter)).ToList();
         }
     }
 }

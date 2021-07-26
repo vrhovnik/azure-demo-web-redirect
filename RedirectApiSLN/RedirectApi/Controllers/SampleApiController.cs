@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RedirectApi.Helpers;
@@ -27,20 +26,15 @@ namespace RedirectApi.Controllers
         {
             var list = StaticDataGenerator.SearchingTheList(param);
             logger.LogInformation($"Doing serialization on the filtered list with {list.Count} items");
-            var json = JsonSerializer.Serialize(list);
-            logger.LogInformation("serialization done and returning the list with demo data");
-            return Ok(json);
+            return Ok(list);
         }
-        
+
         [Route("givemejson")]
-        [Produces("application/json")]
         public IActionResult ReturnJsonExampleFile()
         {
-            var list = StaticDataGenerator.GetPersonList();
-            logger.LogInformation($"Doing serialization on the list with {list.Count} items");
-            var json = JsonSerializer.Serialize(list);
-            logger.LogInformation("serialization done and returning the list with demo data");
-            return Ok(json);
+            var list = StaticDataGenerator.GetPersonListAsMemoryStream();
+            logger.LogInformation($"Doing serialization on the memory stream with {list.Length} in byte size");
+            return File(list, "application/json", "persons.json");
         }
     }
 }

@@ -28,7 +28,7 @@ namespace RedirectClientCalls
                 "demo/withparam/john d");
             //call parameter with /
             await CallHttpApi("Calling [bold red]api with space parameter[/] to check, if it works", baseUrl,
-                "demo/withparam//");
+                "demo/withparam/%2F");
 
             var productionBaseUrl = Environment.GetEnvironmentVariable("ProdURL");
 
@@ -49,7 +49,7 @@ namespace RedirectClientCalls
                 
                 //call parameter with /
                 await CallHttpApi("Calling [bold red]api with space parameter[/] to check, if it works", baseUrl,
-                    "demo/withparam//");
+                    "demo/withparam/%FA");
             }
 
             OutputRule("Finished with calls");

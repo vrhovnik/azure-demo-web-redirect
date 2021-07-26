@@ -9,6 +9,10 @@ ProjectSection(SolutionItems) = preProject
 	..\Dockerfile = ..\Dockerfile
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedirectUrl.Tests", "RedirectUrl.Tests\RedirectUrl.Tests.csproj", "{95A79623-7D74-4328-83CA-88DED84B0F25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedirectApi.Models", "RedirectApi.Models\RedirectApi.Models.csproj", "{17898684-BB7A-4241-9A25-063AFF641CB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +27,13 @@ Global
 		{9211917E-AB12-4B72-8805-3E1123387DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9211917E-AB12-4B72-8805-3E1123387DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9211917E-AB12-4B72-8805-3E1123387DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95A79623-7D74-4328-83CA-88DED84B0F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95A79623-7D74-4328-83CA-88DED84B0F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95A79623-7D74-4328-83CA-88DED84B0F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95A79623-7D74-4328-83CA-88DED84B0F25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17898684-BB7A-4241-9A25-063AFF641CB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17898684-BB7A-4241-9A25-063AFF641CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17898684-BB7A-4241-9A25-063AFF641CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17898684-BB7A-4241-9A25-063AFF641CB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
