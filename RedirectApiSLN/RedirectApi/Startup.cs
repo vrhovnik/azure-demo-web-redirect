@@ -16,6 +16,7 @@ namespace RedirectApi
         {
             services.AddHealthChecks();
             services.AddControllers();
+            //services.AddRouting();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -12,7 +12,7 @@ namespace RedirectUrl.Tests
     {
         private HttpClient client;
         private const string localBaseURI = "https://localhost:5005/";
-        
+
         [SetUp]
         public void Setup() => client = new HttpClient {BaseAddress = new Uri(localBaseURI, UriKind.Absolute)};
 
@@ -21,39 +21,51 @@ namespace RedirectUrl.Tests
         {
             var response = await client.GetAsync("health");
             response.EnsureSuccessStatusCode();
-            Assert.IsTrue(response.IsSuccessStatusCode,"Built in health call was successful");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Built in health call was successful");
         }
-        
+
         [Test(Description = "Call to API defined health check")]
         public async Task IsHealthyViaApi()
         {
             var response = await client.GetAsync("demo/amialive");
             response.EnsureSuccessStatusCode();
-            Assert.IsTrue(response.IsSuccessStatusCode,"API Health call was successful");
-        } 
-        
+            Assert.IsTrue(response.IsSuccessStatusCode, "API Health call was successful");
+        }
+
+        [Test(Description = "Call to Azure production API defined health check")]
+        public async Task IsHealthyViaApiToProduction()
+        {
+            var baseUrlProd = Environment.GetEnvironmentVariable("ProdURL");
+            Assert.IsNotEmpty(baseUrlProd,"Base URL is not empty");
+            client = new HttpClient
+                {BaseAddress = new Uri(baseUrlProd, UriKind.RelativeOrAbsolute)};
+            var response = await client.GetAsync("demo/amialive");
+            response.EnsureSuccessStatusCode();
+            Assert.IsTrue(response.IsSuccessStatusCode, "API Health call to production was successful");
+        }
+
         [Test(Description = "Call to API with simple parameter call")]
         public async Task CheckCallWithSimpleParameter()
         {
             var response = await client.GetAsync("demo/withparam/john");
             response.EnsureSuccessStatusCode();
-            Assert.IsTrue(response.IsSuccessStatusCode,"Http call was successful");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Http call was successful");
             var personList = await response.Content.ReadAsStringAsync();
             var list = JsonConvert.DeserializeObject<List<Person>>(personList);
-            Assert.IsInstanceOf<List<Person>>(list,"Person list has been returned");
-            Assert.IsNotEmpty(list,"At least one result was returned");
+            Assert.IsInstanceOf<List<Person>>(list, "Person list has been returned");
+            Assert.IsNotEmpty(list, "At least one result was returned");
         }
-        
+
         [Test(Description = "Call to API with ASCII parameter call")]
         public async Task CheckCallWithAsciiParameter()
         {
             var response = await client.GetAsync("demo/withparam/%FA");
             response.EnsureSuccessStatusCode();
-            Assert.IsTrue(response.IsSuccessStatusCode,"Http call was successful");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Http call was successful");
             var personList = await response.Content.ReadAsStringAsync();
             var list = JsonConvert.DeserializeObject<List<Person>>(personList);
-            Assert.IsInstanceOf<List<Person>>(list,"Person list has been returned");
-            Assert.IsNotEmpty(list,"At least one result was returned");
+            Assert.IsInstanceOf<List<Person>>(list, "Person list has been returned");
+            Assert.IsNotEmpty(list, "At least one result was returned");
         }
     }
 }
