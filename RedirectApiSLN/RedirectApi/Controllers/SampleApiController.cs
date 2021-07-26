@@ -29,6 +29,18 @@ namespace RedirectApi.Controllers
             return Ok(list);
         }
 
+        [Route("withencodedparam/{param}")]
+        [Produces("application/json")]
+        public IActionResult ReturnWithEncodedParameter(string param)
+        {
+            //replace with %252F
+            if (param.Contains("%2F")) param = param.Replace("%2F", "%252F");
+            
+            var list = StaticDataGenerator.SearchingTheListWithEncoded(param);
+            logger.LogInformation($"Doing serialization on the filtered list with {list.Count} items");
+            return Ok(list);
+        }
+
         [Route("givemejson")]
         public IActionResult ReturnJsonExampleFile()
         {

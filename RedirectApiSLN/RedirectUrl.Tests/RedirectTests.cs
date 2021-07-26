@@ -59,7 +59,7 @@ namespace RedirectUrl.Tests
         [Test(Description = "Call to API with ASCII parameter call")]
         public async Task CheckCallWithAsciiParameter()
         {
-            var response = await client.GetAsync("demo/withparam/%FA");
+            var response = await client.GetAsync("demo/withparam/%2F");
             response.EnsureSuccessStatusCode();
             Assert.IsTrue(response.IsSuccessStatusCode, "Http call was successful");
             var personList = await response.Content.ReadAsStringAsync();
