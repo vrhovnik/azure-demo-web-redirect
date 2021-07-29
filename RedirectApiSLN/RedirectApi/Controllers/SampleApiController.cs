@@ -28,6 +28,24 @@ namespace RedirectApi.Controllers
             logger.LogInformation($"Doing serialization on the filtered list with {list.Count} items");
             return Ok(list);
         }
+        
+        [Route("catch/{**catchAll}")]
+        [Produces("application/json")]
+        public IActionResult CatchAll(string catchAll)
+        {
+            var list = StaticDataGenerator.GetPersonList();
+            if (string.IsNullOrEmpty(catchAll)) return Ok(list);
+
+            //lets assume, we have /demo/catch/api/call, api/call will be forwarded to the call
+            var param = catchAll.Split("/");
+
+            if (param.Length < 1) return NotFound("Data length was not appropriate");
+
+            var parameter = $"{param[0]} {param[1]}"; //remove the need for / parameter
+            list = StaticDataGenerator.SearchingTheList(parameter);
+            logger.LogInformation($"Doing check with {parameter} on the list with {list.Count} items");
+            return Ok(list);
+        }
 
         [Route("withencodedparam/{param}")]
         [Produces("application/json")]
