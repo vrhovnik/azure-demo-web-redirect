@@ -24,6 +24,7 @@ namespace RedirectApi.Controllers
         [Produces("application/json")]
         public IActionResult ReturnWithParameter(string param)
         {
+            logger.LogInformation($"Parameter was {param}");
             var list = StaticDataGenerator.SearchingTheList(param);
             logger.LogInformation($"Doing serialization on the filtered list with {list.Count} items");
             return Ok(list);
@@ -33,10 +34,11 @@ namespace RedirectApi.Controllers
         [Produces("application/json")]
         public IActionResult CatchAll(string catchAll)
         {
+            logger.LogInformation($"Catch all parameter is {catchAll}");
             var list = StaticDataGenerator.GetPersonList();
             if (string.IsNullOrEmpty(catchAll)) return Ok(list);
 
-            //lets assume, we have /demo/catch/api/call, api/call will be forwarded to the call
+            //lets assume - for demo purposes, we have /demo/catch/api/call, api/call will be forwarded to the call
             var param = catchAll.Split("/");
 
             if (param.Length < 1) return NotFound("Data length was not appropriate");
@@ -51,6 +53,7 @@ namespace RedirectApi.Controllers
         [Produces("application/json")]
         public IActionResult ReturnWithEncodedParameter(string param)
         {
+            logger.LogInformation($"Parameter was {param}");
             //replace with %252F
             if (param.Contains("%2F")) param = param.Replace("%2F", "%252F");
             
